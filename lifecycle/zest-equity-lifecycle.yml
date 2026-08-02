@@ -1,0 +1,24 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.zestequity.com
+versioning:
+  scheme: uri-path
+  current: v1
+  policy: Additive-only; the wire shape of a v1 endpoint is never changed (only new fields added).
+  docs: https://docs.zestequity.com/introduction
+deprecation:
+  policy_url: null
+  sunset_header: false
+  notes: No formal deprecation policy or RFC 8594 Sunset/Deprecation header support documented.
+sla:
+  url: null
+  uptime_target: null
+status_page: null
+changelog:
+  url: https://docs.zestequity.com/changelog
+  current_version: v1.0.1
+  ref: changelog/zest-equity-changelog.yml
+deprecated_operations: []
+notes: >-
+  API is at v1.0.1 (post-launch corrections on v1.0.0). No status page, SLA, or
+  deprecation policy is published as of this pass; only a dated changelog.

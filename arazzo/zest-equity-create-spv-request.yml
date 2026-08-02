@@ -1,0 +1,55 @@
+arazzo: 1.0.1
+info:
+  title: Zest — authenticate and create an SPV request
+  version: 1.0.0
+  summary: Mint an access token then submit and read back a contract-validated SPV creation request.
+sourceDescriptions:
+- name: zest
+  url: ../openapi/zest-equity-openapi-original.json
+  type: openapi
+workflows:
+- workflowId: createSpvRequest
+  summary: Exchange a JWT assertion for a token, create an SPV request idempotently, then fetch it.
+  inputs:
+    type: object
+    properties:
+      assertion: {type: string, description: EdDSA-signed JWT assertion}
+      idempotencyKey: {type: string, description: v4 UUID}
+      templateId: {type: string}
+      templateVersion: {type: string}
+      attributes: {type: object}
+  steps:
+  - stepId: authenticate
+    operationId: exchangeJwtAssertion
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        grant_type: urn:ietf:params:oauth:grant-type:jwt-bearer
+        assertion: $inputs.assertion
+    outputs:
+      accessToken: $response.body#/accessToken
+  - stepId: create
+    operationId: createSpvRequest
+    parameters:
+    - {name: Idempotency-Key, in: header, value: $inputs.idempotencyKey}
+    - {name: Authorization, in: header, value: "Bearer $steps.authenticate.outputs.accessToken"}
+    requestBody:
+      contentType: application/json
+      payload:
+        templateId: $inputs.templateId
+        templateVersion: $inputs.templateVersion
+        attributes: $inputs.attributes
+    successCriteria:
+    - {condition: $statusCode == 201}
+    outputs:
+      spvRequestSlug: $response.body#/spvRequestSlug
+      status: $response.body#/status
+  - stepId: fetch
+    operationId: getSpvRequest
+    parameters:
+    - {name: slug, in: path, value: $steps.create.outputs.spvRequestSlug}
+    - {name: Authorization, in: header, value: "Bearer $steps.authenticate.outputs.accessToken"}
+    successCriteria:
+    - {condition: $statusCode == 200}
+  outputs:
+    spvRequestSlug: $steps.create.outputs.spvRequestSlug

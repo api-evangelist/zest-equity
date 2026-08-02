@@ -1,0 +1,59 @@
+generated: '2026-07-21'
+method: searched
+source: openapi/zest-equity-openapi-original.json
+docs: https://docs.zestequity.com/authentication
+summary:
+  types:
+  - http
+  - oauth2
+  api_key_in: []
+  oauth2_flows:
+  - jwt-bearer-assertion
+  - refresh_token
+schemes:
+- name: HTTPBearer
+  type: http
+  scheme: bearer
+  description: >-
+    Every partner API call presents a short-lived bearer access token in the
+    Authorization header. Tokens are minted via the OAuth 2.0 JWT-Bearer
+    assertion grant (RFC 7523), not issued directly.
+  sources:
+  - openapi/zest-equity-openapi-original.json
+- name: OAuth2 JWT-Bearer assertion
+  type: oauth2
+  standard: RFC 7523
+  description: >-
+    Partners sign a JWT assertion with their registered EdDSA (Ed25519) private
+    key and POST it to /v1/oauth2/tokens with
+    grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer to receive an access
+    token + refresh token. Only EdDSA is accepted; RSA/HMAC assertions are
+    rejected.
+  token_url: https://public-api.zestequity.com/v1/oauth2/tokens
+  sandbox_token_url: https://sandbox-api.zestequity.com/v1/oauth2/tokens
+  assertion_claims:
+    iss: Your API base URL (issuer identifier)
+    sub: Your client_id (must equal client_id claim)
+    aud: >-
+      Exactly the Zest environment base URL —
+      https://public-api.zestequity.com or https://sandbox-api.zestequity.com
+    client_id: Your client_id (must equal sub)
+    iat: Issued-at (unix seconds)
+    exp: Expiry (unix seconds; ~60s recommended)
+  token_response:
+    access_token_ttl_seconds: 3600
+    refresh_token_ttl_seconds: 2592000
+    token_type: Bearer
+    refresh_rotates: true
+    notes: >-
+      Refresh tokens rotate on every use; redeeming a stale refresh token
+      returns 401 and invalidates the whole chain, forcing a fresh JWT-bearer
+      assertion.
+  introspection: GET /v1/oauth2/info (returns client type, client id, application name)
+  sources:
+  - https://docs.zestequity.com/authentication
+notes: >-
+  The OpenAPI declares only the HTTPBearer http/bearer scheme; the JWT-Bearer
+  assertion token-minting flow is documented (RFC 7523) but not modelled as an
+  oauth2 securityScheme in the spec. Provisioning (client_id + EdDSA key) is
+  done during partner onboarding via sara@zestholdco.com.

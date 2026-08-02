@@ -1,0 +1,16 @@
+generated: '2026-07-21'
+method: generated
+source: openapi/zest-equity-openapi-original.json + https://docs.zestequity.com
+skills:
+- file: zest-equity-authenticate.md
+  name: Authenticate with the Zest Public API
+  api: openapi/zest-equity-openapi-original.json
+  operations: [exchangeJwtAssertion, getOauth2Info]
+- file: zest-equity-create-spv-request.md
+  name: Create and track an SPV request
+  api: openapi/zest-equity-openapi-original.json
+  operations: [list_templates_v1_contracts_templates__version__get, createSpvRequest, getSpvRequest, listSpvRequests, cancelSpvRequest]
+- file: zest-equity-onboard-and-subscribe.md
+  name: Onboard investors and record a subscription
+  api: openapi/zest-equity-openapi-original.json
+  operations: [bulkCreateInvestors, createSubscriptions, uploadSubscriptionForm, uploadFundingReceipt]

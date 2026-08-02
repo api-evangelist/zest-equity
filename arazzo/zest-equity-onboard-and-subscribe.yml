@@ -1,0 +1,58 @@
+arazzo: 1.0.1
+info:
+  title: Zest — onboard investors and record a subscription
+  version: 1.0.0
+  summary: Bulk-create investors, subscribe one to an SPV, then upload the signed form and funding receipt in strict order.
+sourceDescriptions:
+- name: zest
+  url: ../openapi/zest-equity-openapi-original.json
+  type: openapi
+workflows:
+- workflowId: onboardAndSubscribe
+  summary: Full partner-managed subscription flow after an SPV is materialised.
+  inputs:
+    type: object
+    properties:
+      accessToken: {type: string, description: Bearer access token from the auth flow}
+      spvSlug: {type: string}
+      investors: {type: array}
+      subscriptions: {type: array}
+      personId: {type: string}
+  steps:
+  - stepId: createInvestors
+    operationId: bulkCreateInvestors
+    parameters:
+    - {name: Authorization, in: header, value: "Bearer $inputs.accessToken"}
+    requestBody:
+      contentType: application/json
+      payload:
+        investors: $inputs.investors
+    successCriteria:
+    - {condition: $statusCode == 200}
+  - stepId: subscribe
+    operationId: createSubscriptions
+    parameters:
+    - {name: spv_slug, in: path, value: $inputs.spvSlug}
+    - {name: Authorization, in: header, value: "Bearer $inputs.accessToken"}
+    requestBody:
+      contentType: application/json
+      payload:
+        subscriptions: $inputs.subscriptions
+    successCriteria:
+    - {condition: $statusCode == 201}
+  - stepId: uploadForm
+    operationId: uploadSubscriptionForm
+    parameters:
+    - {name: spv_slug, in: path, value: $inputs.spvSlug}
+    - {name: person_id, in: path, value: $inputs.personId}
+    - {name: Authorization, in: header, value: "Bearer $inputs.accessToken"}
+    successCriteria:
+    - {condition: $statusCode == 201}
+  - stepId: uploadFunding
+    operationId: uploadFundingReceipt
+    parameters:
+    - {name: spv_slug, in: path, value: $inputs.spvSlug}
+    - {name: person_id, in: path, value: $inputs.personId}
+    - {name: Authorization, in: header, value: "Bearer $inputs.accessToken"}
+    successCriteria:
+    - {condition: $statusCode == 201}

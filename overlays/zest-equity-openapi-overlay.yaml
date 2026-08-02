@@ -1,0 +1,24 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Zest Public API
+  version: 1.0.0
+extends: openapi/zest-equity-openapi-original.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enriched: '2026-07-21'
+    x-apievangelist-provider: zest-equity
+    x-production-base-url: https://public-api.zestequity.com
+    x-sandbox-base-url: https://sandbox-api.zestequity.com
+    x-authentication: OAuth 2.0 JWT-Bearer assertion (RFC 7523), EdDSA; access token via POST /v1/oauth2/tokens
+    x-idempotency: Idempotency-Key header, 24h replay window, body-hash conflict detection
+    x-error-format: custom-envelope (code/detail/errorId/validationErrors) — not RFC 9457
+    x-webhooks: 9 event types, HMAC-SHA256 signed (Zest-Signature)
+    x-docs: https://docs.zestequity.com
+    x-changelog: https://docs.zestequity.com/changelog
+- target: $.servers
+  update:
+  - url: https://public-api.zestequity.com
+    description: Production
+  - url: https://sandbox-api.zestequity.com
+    description: Sandbox / Staging

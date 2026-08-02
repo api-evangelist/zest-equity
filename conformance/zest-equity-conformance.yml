@@ -1,0 +1,42 @@
+generated: '2026-07-21'
+method: searched
+source: openapi/zest-equity-openapi-original.json + https://docs.zestequity.com + https://zestequity.com
+standards:
+- id: oauth2
+  conforms: true
+  evidence: Access tokens issued via OAuth 2.0 token endpoint POST /v1/oauth2/tokens.
+- id: rfc7523-jwt-bearer
+  conforms: true
+  evidence: grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer with EdDSA-signed assertion.
+- id: rfc6750-bearer-token
+  conforms: true
+  evidence: Authorization Bearer access token on every partner call (HTTPBearer scheme).
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: Uses a custom error envelope (code/detail/errorId/validationErrors), not application/problem+json.
+- id: idempotency-key
+  conforms: true
+  evidence: Idempotency-Key header with 24h replay window and body-hash conflict detection on write endpoints.
+- id: webhook-hmac-signing
+  conforms: true
+  evidence: Zest-Signature HMAC-SHA256 over timestamped raw body (Stripe-style t=,v1=), 5-minute replay window.
+- id: pagination
+  conforms: true
+  evidence: page/perPage query parameters on listSpvRequests.
+- id: iso-27001
+  conforms: true
+  evidence: 'ISO/IEC 27001:2022 certification published in the zestequity.com site footer.'
+- id: fhir-r4
+  conforms: false
+- id: fapi
+  conforms: false
+- id: scim
+  conforms: false
+compliance:
+  published: true
+  certifications:
+  - 'ISO/IEC 27001:2022'
+  regulatory:
+  - FSRA-regulated (Abu Dhabi Global Market) escrow and deal-arranging entities
+  - DIFC-regulated SPV-as-a-Service workflow
+  source: https://zestequity.com

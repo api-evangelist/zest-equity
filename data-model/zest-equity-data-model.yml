@@ -1,0 +1,50 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/zest-equity-openapi-original.json
+docs: https://docs.zestequity.com/concepts/data-flow
+notes: >-
+  Entity graph derived from OpenAPI component schemas and path parameters
+  (spv_slug, person_id, partnerInvestorId). Ids observed: SPV request slug
+  prefix `svr_`, webhook event id prefix `wde_`, subscription form/funding via
+  person_id. Attribute payloads are validated against versioned spaas-contract
+  templates (contracts domain).
+entities:
+- name: SpvRequest
+  schemas: [SpvRequestCreate, SpvRequestResponse, SpvRequestStatus]
+  id_field: spvRequestSlug
+  id_prefix: svr_
+  states: [pending-review, approved, rejected, cancelled]
+  description: A partner request to create an SPV; on admin approval it materialises an SPV (Opportunity, Vehicle, SP, SPC).
+- name: Investor
+  schemas: [InvestorBulkCreate, InvestorCreateRow, InvestorRowResult, InvestorRowError, InvestorBulkResponse]
+  id_field: zestPersonId
+  correlation_field: partnerInvestorId
+  description: A partner-managed investor person record; bulk-created with partial-success semantics.
+- name: Subscription
+  schemas: [SubscriptionBulkCreate, SubscriptionCreateRow, SubscriptionResult, SubscriptionBulkResponse]
+  description: A subscription (bid) of an investor into an SPV; lump sum + share class.
+- name: SubscriptionForm
+  schemas: [FormUploadResponse, Body_uploadSubscriptionForm]
+  description: A signed subscription form uploaded for a partner-managed subscription (multipart, <=10MB).
+- name: FundingReceipt
+  schemas: [FundingUploadResponse, Body_uploadFundingReceipt]
+  description: A wire-transfer receipt + funding metadata; requires the signed form on record first (strict order).
+- name: Contract
+  schemas: [AggregationResponse, MaterialisedRefsResponse]
+  sub_types: [template, catalog, primitive, sample]
+  description: Versioned spaas-contract definitions that SPV request attributes are validated against.
+- name: ShareClass
+  schemas: [ShareClassFeesAndCarry, FeesAndCarryResponse]
+  description: Fees-and-carry configuration per share class within an SPV.
+- name: Token
+  schemas: [TokenResponse, InfoResponse, Body_exchangeJwtAssertion]
+  description: OAuth2 access/refresh token pair minted from a JWT-bearer assertion.
+relationships:
+- {from: Subscription, type: belongs_to, to: SPV, via: spv_slug}
+- {from: SPV, type: has_many, to: Subscription, via: spv_slug}
+- {from: Subscription, type: belongs_to, to: Investor, via: person_id}
+- {from: SubscriptionForm, type: belongs_to, to: Subscription, via: person_id}
+- {from: FundingReceipt, type: belongs_to, to: Subscription, via: person_id}
+- {from: FundingReceipt, type: requires, to: SubscriptionForm, via: strict-order}
+- {from: SpvRequest, type: materialises, to: SPV, via: admin-approval}
+- {from: SpvRequest, type: validated_against, to: Contract, via: templateId+templateVersion}

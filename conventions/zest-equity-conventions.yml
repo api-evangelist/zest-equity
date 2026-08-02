@@ -1,0 +1,61 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.zestequity.com
+docs: https://docs.zestequity.com/introduction
+wire_format:
+  media_type: application/json
+  field_casing: camelCase
+  notes: All request/response bodies use JSON with camelCase field names.
+authentication:
+  style: bearer-access-token
+  minting: OAuth 2.0 JWT-Bearer assertion grant (RFC 7523), EdDSA-signed
+  header: 'Authorization: Bearer <accessToken>'
+  ref: authentication/zest-equity-authentication.yml
+idempotency:
+  supported: true
+  header: Idempotency-Key
+  scope: '(client_id, idempotency_key)'
+  retention_hours: 24
+  body_hashing: Canonicalised request body (sorted JSON keys, UTF-8) hashed and bound to the key
+  conflict_behavior: Same key + different body hash within 24h returns 409 conflict
+  replay_behavior: Same key + same body hash within 24h replays the original cached response verbatim (original status)
+  endpoints:
+    required:
+    - operation: createSpvRequest
+      path: POST /v1/spv-requests
+      note: Returns 400 invalid_request if the Idempotency-Key header is missing
+    optional:
+    - operation: bulkCreateInvestors
+      path: POST /v1/investors
+      note: Additionally idempotent on the partnerInvestorId field (replay returns existing zestPersonId)
+    - operation: createSubscriptions
+      path: POST /v1/spvs/{spv_slug}/subscriptions
+    not_used:
+    - path: 'POST /v1/spvs/{slug}/subscription/{personId}/forms'
+      note: uploads are content-addressed
+    - path: 'POST /v1/spvs/{slug}/subscription/{personId}/fundings'
+      note: uploads are content-addressed
+  docs: https://docs.zestequity.com/idempotency
+pagination:
+  style: page-number
+  params:
+  - {name: page, in: query}
+  - {name: perPage, in: query}
+  applies_to: [listSpvRequests]
+versioning:
+  scheme: uri-path
+  current: v1
+  policy: Additive-only — the wire shape of a v1 endpoint is never changed; new fields only.
+  ref: lifecycle/zest-equity-lifecycle.yml
+error_envelope:
+  format: custom-envelope
+  fields: [code, detail, errorId, validationErrors]
+  ref: errors/zest-equity-problem-types.yml
+webhooks:
+  envelope_fields: [eventId, eventType, occurredAt, data]
+  delivery: at-least-once; dedup on eventId; order by occurredAt
+  signature: 'Zest-Signature: t=<unix>,v1=<hmac-sha256-hex>'
+  ref: asyncapi/zest-equity-webhooks.yml
+rate_limit_signaling:
+  documented: false
+  notes: No published rate-limit headers or quotas found in the developer docs.

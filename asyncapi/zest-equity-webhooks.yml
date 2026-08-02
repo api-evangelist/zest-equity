@@ -1,0 +1,48 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.zestequity.com/webhooks/overview
+spec_type: Webhooks
+notes: >-
+  Zest documents a webhook surface but publishes no AsyncAPI document. This
+  artifact captures the webhook catalog (envelope, events, signing, retries).
+  No AsyncAPI spec was found — not fabricated.
+transport: HTTPS POST to a single partner-registered endpoint
+content_type: application/json
+delivery:
+  guarantee: at-least-once
+  ordering: none; order by occurredAt, not receipt order
+  dedup_on: eventId
+  ack: return 2xx within 10 seconds; 4xx/5xx or timeout triggers retry
+  pattern: outbox (events persisted before delivery)
+envelope:
+  fields:
+  - {name: eventId, type: string, description: Globally unique delivery id; dedup key}
+  - {name: eventType, type: string, description: One of the nine event types}
+  - {name: occurredAt, type: string(iso8601-utc), description: Server emit time; use for ordering}
+  - {name: data, type: object, description: Per-event payload}
+headers:
+  Zest-Signature: 't=<unix>,v1=<hex>'
+  Zest-Event-Id: '<eventId>'
+  Zest-Event-Type: '<eventType>'
+  User-Agent: ZestWebhooks/1.0
+signing:
+  scheme: HMAC-SHA256 over "<t>.<raw_body>" (Stripe-style)
+  secret_format: whsec_<hex>
+  replay_window_seconds: 300
+  verification_docs: https://docs.zestequity.com/webhooks/verification
+retries:
+  schedule: [0, 30s, 5m, 30m, 2h, 12h]
+  attempts: 6
+  dead_letter: retained indefinitely for later replay
+  full_chain: ~14h45m
+  docs: https://docs.zestequity.com/webhooks/retries
+events:
+- {type: spv_request.created, trigger: A partner POSTed a new SPV request (POST /v1/spv-requests returned 201)}
+- {type: spv_request.completed, trigger: Zest admin approved an SPV request and the SPV materialised}
+- {type: spv_request.rejected, trigger: Zest admin rejected an SPV request}
+- {type: spv_request.cancelled, trigger: A partner cancelled a pending-review SPV request}
+- {type: investor.created, trigger: A partner created a new investor record (per row of POST /v1/investors)}
+- {type: subscription.created, trigger: A partner created a subscription on an SPV}
+- {type: signed_subscription_form.uploaded, trigger: A partner uploaded a signed subscription form}
+- {type: funding_receipt.uploaded, trigger: A partner uploaded a wire-transfer receipt}
+- {type: subscription.completed, trigger: Zest admin transitioned a partner-sourced bid to Completed}

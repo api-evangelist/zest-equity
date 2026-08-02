@@ -1,0 +1,12 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/zest-equity-openapi-original.json
+workflows:
+- file: zest-equity-create-spv-request.yml
+  workflowId: createSpvRequest
+  title: Authenticate and create an SPV request
+  summary: Mint an access token then submit and read back a contract-validated SPV creation request.
+- file: zest-equity-onboard-and-subscribe.yml
+  workflowId: onboardAndSubscribe
+  title: Onboard investors and record a subscription
+  summary: Bulk-create investors, subscribe one to an SPV, then upload the signed form and funding receipt in strict order.

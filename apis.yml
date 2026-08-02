@@ -1,27 +1,244 @@
 aid: zest-equity
 name: Zest Equity
-description: 'Zest Equity is a company surfaced as a portfolio company of prosus-ventures and added to
-  the API Evangelist network as a stub for enrichment. Sector: fintech. This profile is a lead awaiting
-  the enrichment pipeline.'
+description: >-
+  Zest Equity is the digital infrastructure for private-market transactions —
+  built in MENA, used worldwide. Its SPV-as-a-Service platform lets partners
+  create DIFC-regulated Special Purpose Vehicles, run FSRA-regulated escrow and
+  deal-arranging, bulk-onboard investors, and process subscriptions. The Zest
+  Public API exposes this workflow programmatically: OAuth 2.0 JWT-Bearer
+  (RFC 7523, EdDSA) authentication, idempotent write endpoints, a versioned
+  contract-template engine, and a nine-event HMAC-signed webhook surface — so
+  fund managers, family offices, VCs, and PE firms can embed SPV setup, fund
+  administration, and regulatory compliance directly inside their own product.
 url: https://raw.githubusercontent.com/api-evangelist/zest-equity/refs/heads/main/apis.yml
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://cdn.prod.website-files.com/699db6380f5e26c60d1ebda3/6a31ad4a4c9ad7f045465700_favicon%20light.png
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - prosus-ventures
 x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier-reason: enriched-has-public-api
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 23
+  pass: local-v1
 tags:
 - Company
 - Fintech
-apis: []
+- Private Markets
+- SPV
+- Investments
+- Escrow
+- Fund Administration
+- MENA
+- Webhooks
+- Regulated
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: zest-equity:zest-equity-authentication-api
+  name: Zest Equity Authentication API
+  description: >-
+    OAuth 2.0 JWT-Bearer assertion grant. Exchange a partner-signed JWT for a short-lived bearer access
+    token, then send that token in the Authorization header on every partner API call.
+  humanURL: https://docs.zestequity.com
+  baseURL: https://public-api.zestequity.com
+  tags:
+  - Authentication
+  properties:
+  - type: OpenAPI
+    url: openapi/zest-equity-authentication-api-openapi.yml
+  - type: Documentation
+    url: https://docs.zestequity.com
+  - type: APIReference
+    url: https://docs.zestequity.com/api-reference
+- aid: zest-equity:zest-equity-contracts-api
+  name: Zest Equity Contracts API
+  description: >-
+    Read-only access to the spaas-contract registry (templates, catalogs, primitives, samples) used to
+    validate SPV-request `attributes`.
+  humanURL: https://docs.zestequity.com
+  baseURL: https://public-api.zestequity.com
+  tags:
+  - Contracts
+  properties:
+  - type: OpenAPI
+    url: openapi/zest-equity-contracts-api-openapi.yml
+  - type: Documentation
+    url: https://docs.zestequity.com
+  - type: APIReference
+    url: https://docs.zestequity.com/api-reference
+- aid: zest-equity:zest-equity-investors-api
+  name: Zest Equity Investors API
+  description: >-
+    Bulk-create investor records with partial-success semantics. Each row carries its own status / error
+    envelope so a single bad row never fails the batch.
+  humanURL: https://docs.zestequity.com
+  baseURL: https://public-api.zestequity.com
+  tags:
+  - Investors
+  properties:
+  - type: OpenAPI
+    url: openapi/zest-equity-investors-api-openapi.yml
+  - type: Documentation
+    url: https://docs.zestequity.com
+  - type: APIReference
+    url: https://docs.zestequity.com/api-reference
+- aid: zest-equity:zest-equity-spv-requests-api
+  name: Zest Equity SPV Requests API
+  description: >-
+    Submit SPV creation requests, inspect their lifecycle, and cancel pending ones. SPV requests are reviewed
+    by Zest admins and produce SPV materialisation on approval.
+  humanURL: https://docs.zestequity.com
+  baseURL: https://public-api.zestequity.com
+  tags:
+  - SPV Requests
+  properties:
+  - type: OpenAPI
+    url: openapi/zest-equity-spv-requests-api-openapi.yml
+  - type: Documentation
+    url: https://docs.zestequity.com
+  - type: APIReference
+    url: https://docs.zestequity.com/api-reference
+- aid: zest-equity:zest-equity-subscription-forms-api
+  name: Zest Equity Subscription Forms API
+  description: >-
+    Upload signed subscription forms (PDF or image) for partner-managed subscriptions. Files are streamed
+    to private storage and referenced on the Bid.
+  humanURL: https://docs.zestequity.com
+  baseURL: https://public-api.zestequity.com
+  tags:
+  - Subscription Forms
+  properties:
+  - type: OpenAPI
+    url: openapi/zest-equity-subscription-forms-api-openapi.yml
+  - type: Documentation
+    url: https://docs.zestequity.com
+  - type: APIReference
+    url: https://docs.zestequity.com/api-reference
+- aid: zest-equity:zest-equity-subscription-fundings-api
+  name: Zest Equity Subscription Fundings API
+  description: >-
+    Upload wire-transfer receipts plus funding metadata. Strict order: a signed form must already be on
+    record before fundings can be uploaded.
+  humanURL: https://docs.zestequity.com
+  baseURL: https://public-api.zestequity.com
+  tags:
+  - Subscription Fundings
+  properties:
+  - type: OpenAPI
+    url: openapi/zest-equity-subscription-fundings-api-openapi.yml
+  - type: Documentation
+    url: https://docs.zestequity.com
+  - type: APIReference
+    url: https://docs.zestequity.com/api-reference
+- aid: zest-equity:zest-equity-subscriptions-api
+  name: Zest Equity Subscriptions API
+  description: Create one or more subscriptions for a single SPV.
+  humanURL: https://docs.zestequity.com
+  baseURL: https://public-api.zestequity.com
+  tags:
+  - Subscriptions
+  properties:
+  - type: OpenAPI
+    url: openapi/zest-equity-subscriptions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.zestequity.com
+  - type: APIReference
+    url: https://docs.zestequity.com/api-reference
+- aid: zest-equity:zest-equity-system-api
+  name: Zest Equity System API
+  description: Service health and OpenAPI introspection endpoints.
+  humanURL: https://docs.zestequity.com
+  baseURL: https://public-api.zestequity.com
+  tags:
+  - System
+  properties:
+  - type: OpenAPI
+    url: openapi/zest-equity-system-api-openapi.yml
+  - type: Documentation
+    url: https://docs.zestequity.com
+  - type: APIReference
+    url: https://docs.zestequity.com/api-reference
 common:
+- type: AgenticAccess
+  url: agentic-access/zest-equity-agentic-access.yml
+- type: Authentication
+  url: authentication/zest-equity-authentication.yml
+- type: DomainSecurity
+  url: security/zest-equity-domain-security.yml
+- type: Conventions
+  url: conventions/zest-equity-conventions.yml
+- type: Idempotency
+  url: conventions/zest-equity-conventions.yml
+- type: ErrorCatalog
+  url: errors/zest-equity-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/zest-equity-lifecycle.yml
+- type: ChangeLog
+  url: changelog/zest-equity-changelog.yml
+- type: Webhooks
+  url: asyncapi/zest-equity-webhooks.yml
+- type: MCPServer
+  url: mcp/zest-equity-mcp.yml
+- type: LLMsTxt
+  url: llms/zest-equity-llms.txt
+- type: Overlay
+  url: overlays/zest-equity-openapi-overlay.yaml
+- type: Conformance
+  url: conformance/zest-equity-conformance.yml
+- type: Compliance
+  url: https://zestequity.com
+- type: DataModel
+  url: data-model/zest-equity-data-model.yml
+- type: Sandbox
+  url: sandbox/zest-equity-sandbox.yml
+- type: WellKnown
+  url: well-known/zest-equity-well-known.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Arazzo
+  name: Authenticate and create an SPV request
+  url: arazzo/zest-equity-create-spv-request.yml
+- type: Arazzo
+  name: Onboard investors and record a subscription
+  url: arazzo/zest-equity-onboard-and-subscribe.yml
+- type: DeveloperPortal
+  url: https://docs.zestequity.com
+- type: Documentation
+  url: https://docs.zestequity.com
+- type: APIReference
+  url: https://docs.zestequity.com/api-reference
+- type: GettingStarted
+  url: https://docs.zestequity.com/quickstart
+- type: Blog
+  url: https://www.zestequity.com/blog
+- type: PrivacyPolicy
+  url: https://app.zestequity.com/privacy-policy
+- type: Login
+  url: https://app.zestequity.com/sign-in
+- type: Support
+  url: https://www.zestequity.com/contact
+- type: GitHubOrganization
+  url: https://github.com/zestequity
 - type: Website
   url: https://zestequity.com

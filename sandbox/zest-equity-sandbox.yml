@@ -1,0 +1,35 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.zestequity.com/quickstart
+environments:
+- name: production
+  base_url: https://public-api.zestequity.com
+- name: sandbox
+  base_url: https://sandbox-api.zestequity.com
+  description: Staging environment; the OpenAPI servers[] entry points here.
+- name: local
+  base_url: http://localhost:8080
+  description: For local development against the open-source reference implementation.
+separation:
+  mechanism: environment-scoped base URL bound into the JWT `aud` claim
+  notes: >-
+    The JWT assertion `aud` claim MUST exactly equal the base URL of the target
+    environment. Sandbox tokens are rejected against production and vice versa.
+provisioning:
+  required:
+  - A sandbox client_id
+  - The matching EdDSA (Ed25519) private key registered with Zest
+  - A registered webhook URL + signing secret (whsec_*)
+  contact: sara@zestholdco.com
+  notes: >-
+    Production base URLs and credentials are communicated during partner
+    onboarding — no self-serve signup for the partner API.
+test_values:
+  published: false
+  notes: >-
+    No magic/fixture test card, token, or identifier values are published; the
+    quickstart exercises the real sandbox with partner-provisioned credentials.
+    templateId, company_id, and deal_type are assigned per partner at onboarding.
+webhook_testing:
+  event_on_first_request: spv_request.created (fired after the quickstart SPV request succeeds)
+  signature_header: Zest-Signature
