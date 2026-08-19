@@ -1,0 +1,581 @@
+{
+  "item": [
+    {
+      "id": "aea6ca84-a152-45ef-b497-9802db591e33",
+      "name": "Subscriptions",
+      "description": {
+        "content": "Create one or more subscriptions for a single SPV.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f174c2dc-000b-486b-9963-6fdf06e5eaaa",
+          "name": "Create subscriptions for one SPV",
+          "request": {
+            "name": "Create subscriptions for one SPV",
+            "description": {
+              "content": "Creates one or more subscription rows for a single SPV. Per investor: lump sum + share class. `Idempotency-Key` is optional.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "spvs",
+                ":spv_slug",
+                "subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "spv_slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "Idempotency-Key",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subscriptions\": [\n    {\n      \"zestPersonId\": \"<string>\",\n      \"lumpSum\": \"<object>\",\n      \"shareClassSlug\": \"<string>\",\n      \"partnerSubscriptionId\": \"<string>\"\n    },\n    {\n      \"zestPersonId\": \"<string>\",\n      \"lumpSum\": \"<object>\",\n      \"shareClassSlug\": \"<string>\",\n      \"partnerSubscriptionId\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bd5a193b-0f1a-4f2e-ac42-d4a04173a167",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "spvs",
+                    ":spv_slug",
+                    "subscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "spv_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Idempotency-Key",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subscriptions\": [\n    {\n      \"zestPersonId\": \"psn_abc123\",\n      \"lumpSum\": {\n        \"currency\": \"USD\",\n        \"value\": \"50000.00\"\n      },\n      \"shareClassSlug\": \"sc_classA\",\n      \"partnerSubscriptionId\": \"acme-sub-9921\"\n    },\n    {\n      \"zestPersonId\": \"psn_abc123\",\n      \"lumpSum\": {\n        \"currency\": \"USD\",\n        \"value\": \"50000.00\"\n      },\n      \"shareClassSlug\": \"sc_classA\",\n      \"partnerSubscriptionId\": \"acme-sub-9921\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"subscriptionSlug\": \"string\",\n      \"spvSlug\": \"string\",\n      \"personId\": \"string\",\n      \"status\": \"string\",\n      \"lumpSum\": {},\n      \"shareClassSlug\": \"string\",\n      \"partnerSubscriptionId\": \"string\"\n    },\n    {\n      \"subscriptionSlug\": \"string\",\n      \"spvSlug\": \"string\",\n      \"personId\": \"string\",\n      \"status\": \"string\",\n      \"lumpSum\": {},\n      \"shareClassSlug\": \"string\",\n      \"partnerSubscriptionId\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1125ea96-0321-48ce-983c-457c03b72df0",
+              "name": "Validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "spvs",
+                    ":spv_slug",
+                    "subscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "spv_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Idempotency-Key",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subscriptions\": [\n    {\n      \"zestPersonId\": \"psn_abc123\",\n      \"lumpSum\": {\n        \"currency\": \"USD\",\n        \"value\": \"50000.00\"\n      },\n      \"shareClassSlug\": \"sc_classA\",\n      \"partnerSubscriptionId\": \"acme-sub-9921\"\n    },\n    {\n      \"zestPersonId\": \"psn_abc123\",\n      \"lumpSum\": {\n        \"currency\": \"USD\",\n        \"value\": \"50000.00\"\n      },\n      \"shareClassSlug\": \"sc_classA\",\n      \"partnerSubscriptionId\": \"acme-sub-9921\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"detail\": \"Something went wrong\",\n  \"errorId\": \"string\",\n  \"validationErrors\": [\n    {\n      \"attribute\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"attribute\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d159e9bc-b92d-4073-9adc-054569089fbb",
+              "name": "Invalid token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "spvs",
+                    ":spv_slug",
+                    "subscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "spv_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Idempotency-Key",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subscriptions\": [\n    {\n      \"zestPersonId\": \"psn_abc123\",\n      \"lumpSum\": {\n        \"currency\": \"USD\",\n        \"value\": \"50000.00\"\n      },\n      \"shareClassSlug\": \"sc_classA\",\n      \"partnerSubscriptionId\": \"acme-sub-9921\"\n    },\n    {\n      \"zestPersonId\": \"psn_abc123\",\n      \"lumpSum\": {\n        \"currency\": \"USD\",\n        \"value\": \"50000.00\"\n      },\n      \"shareClassSlug\": \"sc_classA\",\n      \"partnerSubscriptionId\": \"acme-sub-9921\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"detail\": \"Something went wrong\",\n  \"errorId\": \"string\",\n  \"validationErrors\": [\n    {\n      \"attribute\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"attribute\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f9ac4012-6392-4c87-a0d6-c0c0d054b720",
+              "name": "Service not provisioned for partner API",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "spvs",
+                    ":spv_slug",
+                    "subscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "spv_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Idempotency-Key",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subscriptions\": [\n    {\n      \"zestPersonId\": \"psn_abc123\",\n      \"lumpSum\": {\n        \"currency\": \"USD\",\n        \"value\": \"50000.00\"\n      },\n      \"shareClassSlug\": \"sc_classA\",\n      \"partnerSubscriptionId\": \"acme-sub-9921\"\n    },\n    {\n      \"zestPersonId\": \"psn_abc123\",\n      \"lumpSum\": {\n        \"currency\": \"USD\",\n        \"value\": \"50000.00\"\n      },\n      \"shareClassSlug\": \"sc_classA\",\n      \"partnerSubscriptionId\": \"acme-sub-9921\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"detail\": \"Something went wrong\",\n  \"errorId\": \"string\",\n  \"validationErrors\": [\n    {\n      \"attribute\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"attribute\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0b6b76c9-b82b-42fc-9bbd-d4a9aa391e68",
+              "name": "SPV not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "spvs",
+                    ":spv_slug",
+                    "subscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "spv_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Idempotency-Key",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subscriptions\": [\n    {\n      \"zestPersonId\": \"psn_abc123\",\n      \"lumpSum\": {\n        \"currency\": \"USD\",\n        \"value\": \"50000.00\"\n      },\n      \"shareClassSlug\": \"sc_classA\",\n      \"partnerSubscriptionId\": \"acme-sub-9921\"\n    },\n    {\n      \"zestPersonId\": \"psn_abc123\",\n      \"lumpSum\": {\n        \"currency\": \"USD\",\n        \"value\": \"50000.00\"\n      },\n      \"shareClassSlug\": \"sc_classA\",\n      \"partnerSubscriptionId\": \"acme-sub-9921\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"detail\": \"Something went wrong\",\n  \"errorId\": \"string\",\n  \"validationErrors\": [\n    {\n      \"attribute\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"attribute\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "12760535-fa1a-443e-bee8-50008c63e38a",
+              "name": "Idempotency-Key conflict (different body)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "spvs",
+                    ":spv_slug",
+                    "subscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "spv_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Idempotency-Key",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subscriptions\": [\n    {\n      \"zestPersonId\": \"psn_abc123\",\n      \"lumpSum\": {\n        \"currency\": \"USD\",\n        \"value\": \"50000.00\"\n      },\n      \"shareClassSlug\": \"sc_classA\",\n      \"partnerSubscriptionId\": \"acme-sub-9921\"\n    },\n    {\n      \"zestPersonId\": \"psn_abc123\",\n      \"lumpSum\": {\n        \"currency\": \"USD\",\n        \"value\": \"50000.00\"\n      },\n      \"shareClassSlug\": \"sc_classA\",\n      \"partnerSubscriptionId\": \"acme-sub-9921\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"detail\": \"Something went wrong\",\n  \"errorId\": \"string\",\n  \"validationErrors\": [\n    {\n      \"attribute\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"attribute\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1036a853-e4c6-472a-8203-ca4939d74301",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "spvs",
+                    ":spv_slug",
+                    "subscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "spv_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Idempotency-Key",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subscriptions\": [\n    {\n      \"zestPersonId\": \"psn_abc123\",\n      \"lumpSum\": {\n        \"currency\": \"USD\",\n        \"value\": \"50000.00\"\n      },\n      \"shareClassSlug\": \"sc_classA\",\n      \"partnerSubscriptionId\": \"acme-sub-9921\"\n    },\n    {\n      \"zestPersonId\": \"psn_abc123\",\n      \"lumpSum\": {\n        \"currency\": \"USD\",\n        \"value\": \"50000.00\"\n      },\n      \"shareClassSlug\": \"sc_classA\",\n      \"partnerSubscriptionId\": \"acme-sub-9921\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://sandbox-api.zestequity.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "bcb8c929-db75-4ae4-bf89-84975bed927a",
+    "name": "Zest equity public api Authentication Subscriptions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "OAuth 2.0 JWT-Bearer assertion grant. Exchange a partner-signed JWT for a short-lived bearer access token, then send that token in the Authorization header on every partner API call.",
+      "type": "text/plain"
+    }
+  }
+}
