@@ -47,6 +47,17 @@ tags:
 - Escrow
 - Fund Administration
 - MENA
+- Webhook
+- Regulated
+tags_raw:
+- Company
+- Fintech
+- Private Markets
+- SPV
+- Investments
+- Escrow
+- Fund Administration
+- MENA
 - Webhooks
 - Regulated
 maintainers:
@@ -157,6 +168,8 @@ apis:
   humanURL: https://docs.zestequity.com
   baseURL: https://public-api.zestequity.com
   tags:
+  - Subscription
+  tags_raw:
   - Subscriptions
   properties:
   - type: OpenAPI
