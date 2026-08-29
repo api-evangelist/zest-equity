@@ -4,8 +4,11 @@ info:
   version: 1.0.0
   summary: Mint an access token then submit and read back a contract-validated SPV creation request.
 sourceDescriptions:
-- name: zest
-  url: ../openapi/zest-equity-openapi-original.json
+- name: authenticationApi
+  url: ../openapi/zest-equity-authentication-api-openapi.yml
+  type: openapi
+- name: spvRequestsApi
+  url: ../openapi/zest-equity-spv-requests-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: createSpvRequest

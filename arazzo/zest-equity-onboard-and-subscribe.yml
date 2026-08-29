@@ -4,8 +4,17 @@ info:
   version: 1.0.0
   summary: Bulk-create investors, subscribe one to an SPV, then upload the signed form and funding receipt in strict order.
 sourceDescriptions:
-- name: zest
-  url: ../openapi/zest-equity-openapi-original.json
+- name: investorsApi
+  url: ../openapi/zest-equity-investors-api-openapi.yml
+  type: openapi
+- name: subscriptionFormsApi
+  url: ../openapi/zest-equity-subscription-forms-api-openapi.yml
+  type: openapi
+- name: subscriptionFundingsApi
+  url: ../openapi/zest-equity-subscription-fundings-api-openapi.yml
+  type: openapi
+- name: subscriptionsApi
+  url: ../openapi/zest-equity-subscriptions-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: onboardAndSubscribe
