@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Zest equity public api Authentication Subscription Fundings API
   version: 0.1.0
@@ -95,36 +95,6 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
     FundingUploadResponse:
       properties:
         subscriptionSlug:
@@ -163,6 +133,58 @@ components:
       - wireReference
       - uploadedAt
       title: FundingUploadResponse
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    Body_uploadFundingReceipt:
+      properties:
+        amount:
+          type: string
+          title: Amount
+        currency:
+          type: string
+          title: Currency
+        wireReference:
+          type: string
+          title: Wirereference
+        file:
+          type: string
+          format: binary
+          title: File
+      type: object
+      required:
+      - amount
+      - currency
+      - wireReference
+      - file
+      title: Body_uploadFundingReceipt
     PartnerErrorResponse:
       properties:
         detail:
@@ -188,28 +210,6 @@ components:
       required:
       - code
       title: PartnerErrorResponse
-    Body_uploadFundingReceipt:
-      properties:
-        amount:
-          type: string
-          title: Amount
-        currency:
-          type: string
-          title: Currency
-        wireReference:
-          type: string
-          title: Wirereference
-        file:
-          type: string
-          format: binary
-          title: File
-      type: object
-      required:
-      - amount
-      - currency
-      - wireReference
-      - file
-      title: Body_uploadFundingReceipt
     PartnerValidationError:
       properties:
         attribute:

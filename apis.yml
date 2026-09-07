@@ -268,3 +268,5 @@ common:
   url: https://github.com/zestequity
 - type: Website
   url: https://zestequity.com
+x-parent: zest
+x-relationship: product

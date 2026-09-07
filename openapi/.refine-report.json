@@ -23,6 +23,16 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
+  "notes": [
+    "zest-equity-authentication-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "zest-equity-contracts-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "zest-equity-investors-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "zest-equity-spv-requests-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "zest-equity-subscription-forms-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "zest-equity-subscription-fundings-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "zest-equity-subscriptions-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "zest-equity-system-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
   "skipped": []
 }
