@@ -55,7 +55,7 @@ tags:
 - Fintech
 - Private Markets
 - SPV
-- Investments
+- Investment
 - Escrow
 - Fund Administration
 - MENA
@@ -118,6 +118,8 @@ apis:
   humanURL: https://docs.zestequity.com
   baseURL: https://public-api.zestequity.com
   tags:
+  - Investor
+  tags_raw:
   - Investors
   properties:
   - type: OpenAPI
