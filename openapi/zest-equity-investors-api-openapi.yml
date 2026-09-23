@@ -1,8 +1,8 @@
 openapi: 3.2.0
 info:
-  title: Zest equity public api Authentication Investors API
+  title: Zest equity public Investors API
   version: 0.1.0
-  description: OAuth 2.0 JWT-Bearer assertion grant. Exchange a partner-signed JWT for a short-lived bearer access token, then send that token in the Authorization header on every partner API call.
+  description: Bulk-create investor records with partial-success semantics. Each row carries its own status / error envelope so a single bad row never fails the batch.
 servers:
 - url: https://sandbox-api.zestequity.com
   description: Staging
@@ -86,26 +86,6 @@ components:
       - msg
       - type
       title: ValidationError
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    InvestorBulkCreate:
-      properties:
-        investors:
-          items:
-            $ref: '#/components/schemas/InvestorCreateRow'
-          type: array
-          title: Investors
-      type: object
-      required:
-      - investors
-      title: InvestorBulkCreate
     InvestorRowResult:
       properties:
         partnerInvestorId:
@@ -124,42 +104,6 @@ components:
       - partnerInvestorId
       - status
       title: InvestorRowResult
-    InvestorBulkResponse:
-      properties:
-        results:
-          items:
-            $ref: '#/components/schemas/InvestorRowResult'
-          type: array
-          title: Results
-      type: object
-      required:
-      - results
-      title: InvestorBulkResponse
-    PartnerErrorResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          default: 'ex: Something went wrong'
-          examples:
-          - Something went wrong
-        errorId:
-          type: string
-          title: Errorid
-        code:
-          type: string
-          title: Code
-          description: Stable top-level error code (see PartnerErrorCode enum).
-        validationErrors:
-          items:
-            $ref: '#/components/schemas/PartnerValidationError'
-          type: array
-          title: Validationerrors
-          description: Populated only when code='validation_error'.
-      type: object
-      required:
-      - code
-      title: PartnerErrorResponse
     InvestorRowError:
       properties:
         code:
@@ -200,6 +144,17 @@ components:
       - code
       - message
       title: PartnerValidationError
+    InvestorBulkResponse:
+      properties:
+        results:
+          items:
+            $ref: '#/components/schemas/InvestorRowResult'
+          type: array
+          title: Results
+      type: object
+      required:
+      - results
+      title: InvestorBulkResponse
     InvestorCreateRow:
       properties:
         partnerInvestorId:
@@ -237,6 +192,51 @@ components:
       - lastName
       - dateOfBirth
       title: InvestorCreateRow
+    PartnerErrorResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          default: 'ex: Something went wrong'
+          examples:
+          - Something went wrong
+        errorId:
+          type: string
+          title: Errorid
+        code:
+          type: string
+          title: Code
+          description: Stable top-level error code (see PartnerErrorCode enum).
+        validationErrors:
+          items:
+            $ref: '#/components/schemas/PartnerValidationError'
+          type: array
+          title: Validationerrors
+          description: Populated only when code='validation_error'.
+      type: object
+      required:
+      - code
+      title: PartnerErrorResponse
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    InvestorBulkCreate:
+      properties:
+        investors:
+          items:
+            $ref: '#/components/schemas/InvestorCreateRow'
+          type: array
+          title: Investors
+      type: object
+      required:
+      - investors
+      title: InvestorBulkCreate
   securitySchemes:
     HTTPBearer:
       type: http

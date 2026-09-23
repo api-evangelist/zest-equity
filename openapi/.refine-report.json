@@ -1,14 +1,7 @@
 {
   "provider": "zest-equity",
   "sources": [
-    "zest-equity-authentication-api-openapi.yml",
-    "zest-equity-contracts-api-openapi.yml",
-    "zest-equity-investors-api-openapi.yml",
-    "zest-equity-spv-requests-api-openapi.yml",
-    "zest-equity-subscription-forms-api-openapi.yml",
-    "zest-equity-subscription-fundings-api-openapi.yml",
-    "zest-equity-subscriptions-api-openapi.yml",
-    "zest-equity-system-api-openapi.yml"
+    "_original/zest-equity-openapi-original.json"
   ],
   "outputs": [
     "zest-equity-authentication-api-openapi.yml",
@@ -24,15 +17,18 @@
   "errors": [],
   "warnings": [],
   "notes": [
-    "zest-equity-authentication-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "zest-equity-contracts-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "zest-equity-investors-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "zest-equity-spv-requests-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "zest-equity-subscription-forms-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "zest-equity-subscription-fundings-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "zest-equity-subscriptions-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "zest-equity-system-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "zest-equity-openapi-original.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "zest-equity-authentication-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "zest-equity-contracts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "zest-equity-investors-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "zest-equity-spv-requests-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "zest-equity-subscription-forms-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "zest-equity-subscription-fundings-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "zest-equity-subscriptions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "zest-equity-system-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

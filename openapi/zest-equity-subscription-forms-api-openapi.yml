@@ -1,8 +1,8 @@
 openapi: 3.2.0
 info:
-  title: Zest equity public api Authentication Subscription Forms API
+  title: Zest equity public Subscription Forms API
   version: 0.1.0
-  description: OAuth 2.0 JWT-Bearer assertion grant. Exchange a partner-signed JWT for a short-lived bearer access token, then send that token in the Authorization header on every partner API call.
+  description: Upload signed subscription forms (PDF or image) for partner-managed subscriptions. Files are streamed to private storage and referenced on the Bid.
 servers:
 - url: https://sandbox-api.zestequity.com
   description: Staging
@@ -116,66 +116,6 @@ components:
       - msg
       - type
       title: ValidationError
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    FormUploadResponse:
-      properties:
-        subscriptionSlug:
-          type: string
-          title: Subscriptionslug
-        spvSlug:
-          type: string
-          title: Spvslug
-        personId:
-          type: string
-          title: Personid
-        subscriptionFormUrl:
-          type: string
-          title: Subscriptionformurl
-        uploadedAt:
-          type: string
-          format: date-time
-          title: Uploadedat
-      type: object
-      required:
-      - subscriptionSlug
-      - spvSlug
-      - personId
-      - subscriptionFormUrl
-      - uploadedAt
-      title: FormUploadResponse
-    PartnerErrorResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          default: 'ex: Something went wrong'
-          examples:
-          - Something went wrong
-        errorId:
-          type: string
-          title: Errorid
-        code:
-          type: string
-          title: Code
-          description: Stable top-level error code (see PartnerErrorCode enum).
-        validationErrors:
-          items:
-            $ref: '#/components/schemas/PartnerValidationError'
-          type: array
-          title: Validationerrors
-          description: Populated only when code='validation_error'.
-      type: object
-      required:
-      - code
-      title: PartnerErrorResponse
     Body_uploadSubscriptionForm:
       properties:
         file:
@@ -206,6 +146,66 @@ components:
       - code
       - message
       title: PartnerValidationError
+    PartnerErrorResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          default: 'ex: Something went wrong'
+          examples:
+          - Something went wrong
+        errorId:
+          type: string
+          title: Errorid
+        code:
+          type: string
+          title: Code
+          description: Stable top-level error code (see PartnerErrorCode enum).
+        validationErrors:
+          items:
+            $ref: '#/components/schemas/PartnerValidationError'
+          type: array
+          title: Validationerrors
+          description: Populated only when code='validation_error'.
+      type: object
+      required:
+      - code
+      title: PartnerErrorResponse
+    FormUploadResponse:
+      properties:
+        subscriptionSlug:
+          type: string
+          title: Subscriptionslug
+        spvSlug:
+          type: string
+          title: Spvslug
+        personId:
+          type: string
+          title: Personid
+        subscriptionFormUrl:
+          type: string
+          title: Subscriptionformurl
+        uploadedAt:
+          type: string
+          format: date-time
+          title: Uploadedat
+      type: object
+      required:
+      - subscriptionSlug
+      - spvSlug
+      - personId
+      - subscriptionFormUrl
+      - uploadedAt
+      title: FormUploadResponse
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
   securitySchemes:
     HTTPBearer:
       type: http
