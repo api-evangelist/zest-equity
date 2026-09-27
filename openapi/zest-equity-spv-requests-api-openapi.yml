@@ -214,106 +214,31 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    ValidationError:
+    PartnerErrorResponse:
       properties:
-        loc:
+        detail:
+          type: string
+          title: Detail
+          default: 'ex: Something went wrong'
+          examples:
+          - Something went wrong
+        errorId:
+          type: string
+          title: Errorid
+        code:
+          type: string
+          title: Code
+          description: Stable top-level error code (see PartnerErrorCode enum).
+        validationErrors:
           items:
-            anyOf:
-            - type: string
-            - type: integer
+            $ref: '#/components/schemas/PartnerValidationError'
           type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
+          title: Validationerrors
+          description: Populated only when code='validation_error'.
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    SpvRequestResponse:
-      properties:
-        spvRequestSlug:
-          type: string
-          title: Spvrequestslug
-        status:
-          $ref: '#/components/schemas/SpvRequestStatus'
-        templateId:
-          type: string
-          title: Templateid
-        templateVersion:
-          type: string
-          title: Templateversion
-        tenantSlug:
-          type: string
-          title: Tenantslug
-        clientId:
-          type: string
-          title: Clientid
-        attributes:
-          type: object
-          title: Attributes
-        rejectionReason:
-          type: string
-          title: Rejectionreason
-        cancelledAt:
-          type: string
-          format: date-time
-          title: Cancelledat
-        approvedAt:
-          type: string
-          format: date-time
-          title: Approvedat
-        materialisedRefs:
-          $ref: '#/components/schemas/MaterialisedRefsResponse'
-        feesAndCarry:
-          $ref: '#/components/schemas/FeesAndCarryResponse'
-        createdAt:
-          type: string
-          format: date-time
-          title: Createdat
-        updatedAt:
-          type: string
-          format: date-time
-          title: Updatedat
-      type: object
-      required:
-      - spvRequestSlug
-      - status
-      - templateId
-      - templateVersion
-      - tenantSlug
-      - clientId
-      - attributes
-      - createdAt
-      - updatedAt
-      title: SpvRequestResponse
-    ShareClassFeesAndCarry:
-      properties:
-        name:
-          type: string
-          title: Name
-        slug:
-          type: string
-          title: Slug
-        managementFeePercent:
-          type: string
-          title: Managementfeepercent
-        carryPercent:
-          type: string
-          title: Carrypercent
-        setupFee:
-          type: object
-          title: Setupfee
-      type: object
-      required:
-      - name
-      - slug
-      title: ShareClassFeesAndCarry
+      - code
+      title: PartnerErrorResponse
     MaterialisedRefsResponse:
       properties:
         opportunitySlug:
@@ -382,6 +307,72 @@ components:
       - templateVersion
       - attributes
       title: SpvRequestCreate
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    SpvRequestResponse:
+      properties:
+        spvRequestSlug:
+          type: string
+          title: Spvrequestslug
+        status:
+          $ref: '#/components/schemas/SpvRequestStatus'
+        templateId:
+          type: string
+          title: Templateid
+        templateVersion:
+          type: string
+          title: Templateversion
+        tenantSlug:
+          type: string
+          title: Tenantslug
+        clientId:
+          type: string
+          title: Clientid
+        attributes:
+          type: object
+          title: Attributes
+        rejectionReason:
+          type: string
+          title: Rejectionreason
+        cancelledAt:
+          type: string
+          format: date-time
+          title: Cancelledat
+        approvedAt:
+          type: string
+          format: date-time
+          title: Approvedat
+        materialisedRefs:
+          $ref: '#/components/schemas/MaterialisedRefsResponse'
+        feesAndCarry:
+          $ref: '#/components/schemas/FeesAndCarryResponse'
+        createdAt:
+          type: string
+          format: date-time
+          title: Createdat
+        updatedAt:
+          type: string
+          format: date-time
+          title: Updatedat
+      type: object
+      required:
+      - spvRequestSlug
+      - status
+      - templateId
+      - templateVersion
+      - tenantSlug
+      - clientId
+      - attributes
+      - createdAt
+      - updatedAt
+      title: SpvRequestResponse
     PartnerValidationError:
       properties:
         attribute:
@@ -402,49 +393,6 @@ components:
       - code
       - message
       title: PartnerValidationError
-    PartnerErrorResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          default: 'ex: Something went wrong'
-          examples:
-          - Something went wrong
-        errorId:
-          type: string
-          title: Errorid
-        code:
-          type: string
-          title: Code
-          description: Stable top-level error code (see PartnerErrorCode enum).
-        validationErrors:
-          items:
-            $ref: '#/components/schemas/PartnerValidationError'
-          type: array
-          title: Validationerrors
-          description: Populated only when code='validation_error'.
-      type: object
-      required:
-      - code
-      title: PartnerErrorResponse
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    SpvRequestStatus:
-      type: string
-      enum:
-      - pending-review
-      - approved
-      - rejected
-      - cancelled
-      title: SpvRequestStatus
-      description: An enumeration.
     AggregationResponse:
       properties:
         documents:
@@ -467,6 +415,37 @@ components:
       required:
       - documents
       title: AggregationResponse
+    SpvRequestStatus:
+      type: string
+      enum:
+      - pending-review
+      - approved
+      - rejected
+      - cancelled
+      title: SpvRequestStatus
+      description: An enumeration.
+    ShareClassFeesAndCarry:
+      properties:
+        name:
+          type: string
+          title: Name
+        slug:
+          type: string
+          title: Slug
+        managementFeePercent:
+          type: string
+          title: Managementfeepercent
+        carryPercent:
+          type: string
+          title: Carrypercent
+        setupFee:
+          type: object
+          title: Setupfee
+      type: object
+      required:
+      - name
+      - slug
+      title: ShareClassFeesAndCarry
     FeesAndCarryResponse:
       properties:
         shareClasses:
@@ -476,6 +455,27 @@ components:
           title: Shareclasses
       type: object
       title: FeesAndCarryResponse
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
   securitySchemes:
     HTTPBearer:
       type: http
