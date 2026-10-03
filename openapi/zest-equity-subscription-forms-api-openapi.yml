@@ -95,31 +95,35 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    PartnerErrorResponse:
+    HTTPValidationError:
       properties:
         detail:
-          type: string
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
           title: Detail
-          default: 'ex: Something went wrong'
-          examples:
-          - Something went wrong
-        errorId:
+      type: object
+      title: HTTPValidationError
+    PartnerValidationError:
+      properties:
+        attribute:
           type: string
-          title: Errorid
+          title: Attribute
+          description: Attribute path (e.g. 'deal_name', 'share_class.name').
         code:
           type: string
           title: Code
-          description: Stable top-level error code (see PartnerErrorCode enum).
-        validationErrors:
-          items:
-            $ref: '#/components/schemas/PartnerValidationError'
-          type: array
-          title: Validationerrors
-          description: Populated only when code='validation_error'.
+          description: Stable validation error code (see ValidationErrorCode enum).
+        message:
+          type: string
+          title: Message
+          description: Human-readable message.
       type: object
       required:
+      - attribute
       - code
-      title: PartnerErrorResponse
+      - message
+      title: PartnerValidationError
     Body_uploadSubscriptionForm:
       properties:
         file:
@@ -130,15 +134,6 @@ components:
       required:
       - file
       title: Body_uploadSubscriptionForm
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     FormUploadResponse:
       properties:
         subscriptionSlug:
@@ -165,26 +160,31 @@ components:
       - subscriptionFormUrl
       - uploadedAt
       title: FormUploadResponse
-    PartnerValidationError:
+    PartnerErrorResponse:
       properties:
-        attribute:
+        detail:
           type: string
-          title: Attribute
-          description: Attribute path (e.g. 'deal_name', 'share_class.name').
+          title: Detail
+          default: 'ex: Something went wrong'
+          examples:
+          - Something went wrong
+        errorId:
+          type: string
+          title: Errorid
         code:
           type: string
           title: Code
-          description: Stable validation error code (see ValidationErrorCode enum).
-        message:
-          type: string
-          title: Message
-          description: Human-readable message.
+          description: Stable top-level error code (see PartnerErrorCode enum).
+        validationErrors:
+          items:
+            $ref: '#/components/schemas/PartnerValidationError'
+          type: array
+          title: Validationerrors
+          description: Populated only when code='validation_error'.
       type: object
       required:
-      - attribute
       - code
-      - message
-      title: PartnerValidationError
+      title: PartnerErrorResponse
     ValidationError:
       properties:
         loc:
