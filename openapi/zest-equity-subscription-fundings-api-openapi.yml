@@ -95,15 +95,44 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    HTTPValidationError:
+    FundingUploadResponse:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
+        subscriptionSlug:
+          type: string
+          title: Subscriptionslug
+        spvSlug:
+          type: string
+          title: Spvslug
+        personId:
+          type: string
+          title: Personid
+        fundingReceiptUrl:
+          type: string
+          title: Fundingreceipturl
+        amount:
+          type: string
+          title: Amount
+        currency:
+          type: string
+          title: Currency
+        wireReference:
+          type: string
+          title: Wirereference
+        uploadedAt:
+          type: string
+          format: date-time
+          title: Uploadedat
       type: object
-      title: HTTPValidationError
+      required:
+      - subscriptionSlug
+      - spvSlug
+      - personId
+      - fundingReceiptUrl
+      - amount
+      - currency
+      - wireReference
+      - uploadedAt
+      title: FundingUploadResponse
     PartnerValidationError:
       properties:
         attribute:
@@ -149,44 +178,6 @@ components:
       required:
       - code
       title: PartnerErrorResponse
-    FundingUploadResponse:
-      properties:
-        subscriptionSlug:
-          type: string
-          title: Subscriptionslug
-        spvSlug:
-          type: string
-          title: Spvslug
-        personId:
-          type: string
-          title: Personid
-        fundingReceiptUrl:
-          type: string
-          title: Fundingreceipturl
-        amount:
-          type: string
-          title: Amount
-        currency:
-          type: string
-          title: Currency
-        wireReference:
-          type: string
-          title: Wirereference
-        uploadedAt:
-          type: string
-          format: date-time
-          title: Uploadedat
-      type: object
-      required:
-      - subscriptionSlug
-      - spvSlug
-      - personId
-      - fundingReceiptUrl
-      - amount
-      - currency
-      - wireReference
-      - uploadedAt
-      title: FundingUploadResponse
     ValidationError:
       properties:
         loc:
@@ -230,6 +221,15 @@ components:
       - wireReference
       - file
       title: Body_uploadFundingReceipt
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
   securitySchemes:
     HTTPBearer:
       type: http

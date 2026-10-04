@@ -65,33 +65,6 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    InvestorRowResult:
-      properties:
-        partnerInvestorId:
-          type: string
-          title: Partnerinvestorid
-        status:
-          type: string
-          title: Status
-        zestPersonId:
-          type: string
-          title: Zestpersonid
-        error:
-          $ref: '#/components/schemas/InvestorRowError'
-      type: object
-      required:
-      - partnerInvestorId
-      - status
-      title: InvestorRowResult
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     InvestorBulkResponse:
       properties:
         results:
@@ -103,43 +76,6 @@ components:
       required:
       - results
       title: InvestorBulkResponse
-    InvestorCreateRow:
-      properties:
-        partnerInvestorId:
-          type: string
-          title: Partnerinvestorid
-          description: Stable partner-side investor identifier; used for response correlation + dedupe.
-          example: acme-inv-7341
-        email:
-          type: string
-          title: Email
-          example: alice@example.com
-        firstName:
-          type: string
-          title: Firstname
-          example: Alice
-        lastName:
-          type: string
-          title: Lastname
-          example: Liddell
-        dateOfBirth:
-          type: string
-          title: Dateofbirth
-          description: ISO date YYYY-MM-DD.
-          example: '1985-04-12'
-        countryOfResidence:
-          type: string
-          title: Countryofresidence
-          description: ISO 3166 alpha-2 country code.
-          example: AE
-      type: object
-      required:
-      - partnerInvestorId
-      - email
-      - firstName
-      - lastName
-      - dateOfBirth
-      title: InvestorCreateRow
     InvestorRowError:
       properties:
         code:
@@ -160,6 +96,17 @@ components:
       - message
       - retryable
       title: InvestorRowError
+    InvestorBulkCreate:
+      properties:
+        investors:
+          items:
+            $ref: '#/components/schemas/InvestorCreateRow'
+          type: array
+          title: Investors
+      type: object
+      required:
+      - investors
+      title: InvestorBulkCreate
     PartnerValidationError:
       properties:
         attribute:
@@ -180,17 +127,6 @@ components:
       - code
       - message
       title: PartnerValidationError
-    InvestorBulkCreate:
-      properties:
-        investors:
-          items:
-            $ref: '#/components/schemas/InvestorCreateRow'
-          type: array
-          title: Investors
-      type: object
-      required:
-      - investors
-      title: InvestorBulkCreate
     PartnerErrorResponse:
       properties:
         detail:
@@ -237,6 +173,70 @@ components:
       - msg
       - type
       title: ValidationError
+    InvestorCreateRow:
+      properties:
+        partnerInvestorId:
+          type: string
+          title: Partnerinvestorid
+          description: Stable partner-side investor identifier; used for response correlation + dedupe.
+          example: acme-inv-7341
+        email:
+          type: string
+          title: Email
+          example: alice@example.com
+        firstName:
+          type: string
+          title: Firstname
+          example: Alice
+        lastName:
+          type: string
+          title: Lastname
+          example: Liddell
+        dateOfBirth:
+          type: string
+          title: Dateofbirth
+          description: ISO date YYYY-MM-DD.
+          example: '1985-04-12'
+        countryOfResidence:
+          type: string
+          title: Countryofresidence
+          description: ISO 3166 alpha-2 country code.
+          example: AE
+      type: object
+      required:
+      - partnerInvestorId
+      - email
+      - firstName
+      - lastName
+      - dateOfBirth
+      title: InvestorCreateRow
+    InvestorRowResult:
+      properties:
+        partnerInvestorId:
+          type: string
+          title: Partnerinvestorid
+        status:
+          type: string
+          title: Status
+        zestPersonId:
+          type: string
+          title: Zestpersonid
+        error:
+          $ref: '#/components/schemas/InvestorRowError'
+      type: object
+      required:
+      - partnerInvestorId
+      - status
+      title: InvestorRowResult
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
   securitySchemes:
     HTTPBearer:
       type: http

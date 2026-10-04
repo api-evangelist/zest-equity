@@ -95,15 +95,16 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    HTTPValidationError:
+    Body_uploadSubscriptionForm:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
+        file:
+          type: string
+          format: binary
+          title: File
       type: object
-      title: HTTPValidationError
+      required:
+      - file
+      title: Body_uploadSubscriptionForm
     PartnerValidationError:
       properties:
         attribute:
@@ -124,16 +125,31 @@ components:
       - code
       - message
       title: PartnerValidationError
-    Body_uploadSubscriptionForm:
+    PartnerErrorResponse:
       properties:
-        file:
+        detail:
           type: string
-          format: binary
-          title: File
+          title: Detail
+          default: 'ex: Something went wrong'
+          examples:
+          - Something went wrong
+        errorId:
+          type: string
+          title: Errorid
+        code:
+          type: string
+          title: Code
+          description: Stable top-level error code (see PartnerErrorCode enum).
+        validationErrors:
+          items:
+            $ref: '#/components/schemas/PartnerValidationError'
+          type: array
+          title: Validationerrors
+          description: Populated only when code='validation_error'.
       type: object
       required:
-      - file
-      title: Body_uploadSubscriptionForm
+      - code
+      title: PartnerErrorResponse
     FormUploadResponse:
       properties:
         subscriptionSlug:
@@ -160,31 +176,6 @@ components:
       - subscriptionFormUrl
       - uploadedAt
       title: FormUploadResponse
-    PartnerErrorResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          default: 'ex: Something went wrong'
-          examples:
-          - Something went wrong
-        errorId:
-          type: string
-          title: Errorid
-        code:
-          type: string
-          title: Code
-          description: Stable top-level error code (see PartnerErrorCode enum).
-        validationErrors:
-          items:
-            $ref: '#/components/schemas/PartnerValidationError'
-          type: array
-          title: Validationerrors
-          description: Populated only when code='validation_error'.
-      type: object
-      required:
-      - code
-      title: PartnerErrorResponse
     ValidationError:
       properties:
         loc:
@@ -206,6 +197,15 @@ components:
       - msg
       - type
       title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
   securitySchemes:
     HTTPBearer:
       type: http

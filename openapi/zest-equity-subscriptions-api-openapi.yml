@@ -83,43 +83,6 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    SubscriptionCreateRow:
-      properties:
-        partnerSubscriptionId:
-          type: string
-          title: Partnersubscriptionid
-          description: Optional partner-side subscription id; echoed on the response for correlation.
-          example: acme-sub-9921
-        zestPersonId:
-          type: string
-          title: Zestpersonid
-          example: psn_abc123
-        lumpSum:
-          type: object
-          title: Lumpsum
-          description: '{currency, value} object — currency is ISO 4217, value is a decimal string.'
-          example:
-            currency: USD
-            value: '50000.00'
-        shareClassSlug:
-          type: string
-          title: Shareclassslug
-          example: sc_classA
-      type: object
-      required:
-      - zestPersonId
-      - lumpSum
-      - shareClassSlug
-      title: SubscriptionCreateRow
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     PartnerValidationError:
       properties:
         attribute:
@@ -140,17 +103,31 @@ components:
       - code
       - message
       title: PartnerValidationError
-    SubscriptionBulkResponse:
+    PartnerErrorResponse:
       properties:
-        results:
+        detail:
+          type: string
+          title: Detail
+          default: 'ex: Something went wrong'
+          examples:
+          - Something went wrong
+        errorId:
+          type: string
+          title: Errorid
+        code:
+          type: string
+          title: Code
+          description: Stable top-level error code (see PartnerErrorCode enum).
+        validationErrors:
           items:
-            $ref: '#/components/schemas/SubscriptionResult'
+            $ref: '#/components/schemas/PartnerValidationError'
           type: array
-          title: Results
+          title: Validationerrors
+          description: Populated only when code='validation_error'.
       type: object
       required:
-      - results
-      title: SubscriptionBulkResponse
+      - code
+      title: PartnerErrorResponse
     SubscriptionResult:
       properties:
         partnerSubscriptionId:
@@ -183,31 +160,34 @@ components:
       - lumpSum
       - shareClassSlug
       title: SubscriptionResult
-    PartnerErrorResponse:
+    SubscriptionCreateRow:
       properties:
-        detail:
+        partnerSubscriptionId:
           type: string
-          title: Detail
-          default: 'ex: Something went wrong'
-          examples:
-          - Something went wrong
-        errorId:
+          title: Partnersubscriptionid
+          description: Optional partner-side subscription id; echoed on the response for correlation.
+          example: acme-sub-9921
+        zestPersonId:
           type: string
-          title: Errorid
-        code:
+          title: Zestpersonid
+          example: psn_abc123
+        lumpSum:
+          type: object
+          title: Lumpsum
+          description: '{currency, value} object — currency is ISO 4217, value is a decimal string.'
+          example:
+            currency: USD
+            value: '50000.00'
+        shareClassSlug:
           type: string
-          title: Code
-          description: Stable top-level error code (see PartnerErrorCode enum).
-        validationErrors:
-          items:
-            $ref: '#/components/schemas/PartnerValidationError'
-          type: array
-          title: Validationerrors
-          description: Populated only when code='validation_error'.
+          title: Shareclassslug
+          example: sc_classA
       type: object
       required:
-      - code
-      title: PartnerErrorResponse
+      - zestPersonId
+      - lumpSum
+      - shareClassSlug
+      title: SubscriptionCreateRow
     ValidationError:
       properties:
         loc:
@@ -229,6 +209,17 @@ components:
       - msg
       - type
       title: ValidationError
+    SubscriptionBulkResponse:
+      properties:
+        results:
+          items:
+            $ref: '#/components/schemas/SubscriptionResult'
+          type: array
+          title: Results
+      type: object
+      required:
+      - results
+      title: SubscriptionBulkResponse
     SubscriptionBulkCreate:
       properties:
         subscriptions:
@@ -240,6 +231,15 @@ components:
       required:
       - subscriptions
       title: SubscriptionBulkCreate
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
   securitySchemes:
     HTTPBearer:
       type: http
