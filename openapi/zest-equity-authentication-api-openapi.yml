@@ -54,26 +54,6 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    InfoResponse:
-      properties:
-        clientType:
-          type: string
-          enum:
-          - service
-          - user
-          - application
-          title: Clienttype
-        clientId:
-          type: string
-          title: Clientid
-        metadata:
-          type: object
-          title: Metadata
-      type: object
-      required:
-      - clientType
-      - clientId
-      title: InfoResponse
     TokenResponse:
       properties:
         accessToken:
@@ -86,27 +66,6 @@ components:
       required:
       - accessToken
       title: TokenResponse
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
     HTTPValidationError:
       properties:
         detail:
@@ -129,6 +88,47 @@ components:
       - grant_type
       - assertion
       title: Body_exchangeJwtAssertion
+    InfoResponse:
+      properties:
+        clientType:
+          type: string
+          enum:
+          - service
+          - user
+          - application
+          title: Clienttype
+        clientId:
+          type: string
+          title: Clientid
+        metadata:
+          type: object
+          title: Metadata
+      type: object
+      required:
+      - clientType
+      - clientId
+      title: InfoResponse
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
   securitySchemes:
     HTTPBearer:
       type: http
